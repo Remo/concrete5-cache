@@ -3,8 +3,8 @@ defined('C5_EXECUTE') or die(_("Access Denied."));
 class RemoCachePackage extends Package {
 
 	protected $pkgHandle = 'remo_cache';
-	protected $appVersionRequired = '5.3.3';
-	protected $pkgVersion = '1.0';
+	protected $appVersionRequired = '5.4.0';
+	protected $pkgVersion = '1.2';
 	
 	public function getPackageDescription() {
 		return t("Page cache for Concrete5.");
@@ -17,17 +17,13 @@ class RemoCachePackage extends Package {
 	public function install() {	
 		$pkg = parent::install();
 		
-      $pageCacheDir = DIR_BASE . '/files/page_cache';
-      if (!is_dir($pageCacheDir)) {
-         mkdir($pageCacheDir);
-      }
 	}
 	
 	public function on_start() {  
 
 		Events::extend('on_page_version_approve',
 			'RemoCache',
-			'updatePageCache',
+			'deletePageCache',
 			'packages/'.$this->pkgHandle.'/models/remocache.php'
 			);
 
