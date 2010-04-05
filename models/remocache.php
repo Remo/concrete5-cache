@@ -48,7 +48,7 @@ class RemoCache
 			$u = new User();
 			if (!$u->IsLoggedIn()) {				// Only public information
 				$pkgHandle = "remo_cache";
-				$noCache = "nocache";				// Marker, no cache info available
+				$noCache = "nocache";					// Marker, no cache info available
 
 				$ca = new Cache();
 				$host = strtolower($_SERVER["HTTP_HOST"]);
@@ -61,7 +61,7 @@ class RemoCache
 					}
 				} else {
 					$ca->set($pkgHandle, $id, $noCache);	// No cache info, yet
-					$cachable = array('flash' => true, 'search' => true, 'youtube' => true, 'survey' => true, 'form' => true, 'content' => true, 'image' => true, 'autonav' => true, 'person' => true, 'slideshow' => true, 'file' => true, 'google_map' => true, 'page_list' => true, 'music' => true, 'remo_expand' => true, 'remo_equation' => true, 'pageear' => true, 'zoom_image' => true);
+					$cachable = array('flash' => true, 'search' => true, 'youtube' => true, 'survey' => true, 'content' => true, 'image' => true, 'autonav' => true, 'person' => true, 'slideshow' => true, 'file' => true, 'google_map' => true, 'page_list' => true, 'music' => true, 'remo_expand' => true, 'remo_equation' => true, 'pageear' => true, 'zoom_image' => true);
 					$writeCache = true;			// Assume all blocks are cacheable
 					$blocks = $c->getBlocks();
 					while ($writeCache && (list(, $b) = each($blocks))) {
@@ -72,8 +72,8 @@ class RemoCache
 					if ($writeCache) {			// We can cache this page?
 						$fh = Loader::helper('file');
 						$nh = Loader::helper('navigation'); 
-						$content = $fh->getContents("http://" . $host . $nh->getCollectionURL($c));
-						$ca->set($pkgHandle, $id, $content);
+						$content = $fh->getContents($nh->getCollectionURL($c));
+						$result = $ca->set($pkgHandle, $id, $content);
 					}
 				}
 			}
